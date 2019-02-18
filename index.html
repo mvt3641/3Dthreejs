@@ -9,25 +9,40 @@
 	<body>
 		<script src="js/three.js"></script>
 		<script>
+		// Initalize Scene
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-			var renderer = new THREE.WebGLRenderer();
+			var light = new THREE.AmbientLight(0xffffff, .5);
+			light.position.z = 8;
+			scene.add(light);
+
+			var light1 = new THREE.PointLight(0xffffff, 0.5);
+			light1.position.z =7;
+			scene.add(light1);
+
+
+																							//Field of view               //Asoect Ratio near/far
+			var camera = new THREE.PerspectiveCamera( 35, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer({antialias:true});
+			// renderer.setClearColor(0x00ff00);
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.BoxGeometry( 2, 1, 2 );
-			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+			var geometry = new THREE.BoxGeometry( 1, 1, 1);
+			var material = new THREE.MeshLambertMaterial( { color: 0xacafb8 } );
+			 // var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
+			var mesh = new THREE.Mesh( geometry, material );
+			// mesh.position.set(0, 0, -1000);
+			scene.add( mesh );
 
 			camera.position.z = 7;
 
 			var animate = function () {
 				requestAnimationFrame( animate );
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.02;
+				mesh.rotation.x += 0.05;
+				mesh.rotation.y += 0.02;
 
 				renderer.render( scene, camera );
 			};
