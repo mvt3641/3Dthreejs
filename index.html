@@ -22,27 +22,87 @@
 
 
 																							//Field of view               //Asoect Ratio near/far
-			var camera = new THREE.PerspectiveCamera( 35, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			var camera = new THREE.PerspectiveCamera( 55, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
 			var renderer = new THREE.WebGLRenderer({antialias:true});
-			// renderer.setClearColor(0x00ff00);
+			 renderer.setClearColor(0x83eaf3);
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.BoxGeometry( 1, 1, 1);
-			var material = new THREE.MeshLambertMaterial( { color: 0xacafb8 } );
-			 // var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
-			var mesh = new THREE.Mesh( geometry, material );
-			// mesh.position.set(0, 0, -1000);
-			scene.add( mesh );
+		// 	var geometry = new THREE.Geometry();
+		// 	geometry.vertices.push(
+		// 	new THREE.Vector3(-10, 10, 0),
+		// 	new THREE.Vector3(-10, -10, 0),
+		// 	new THREE.Vector3(10, -10, 0)
+		// );
+		// geometry.faces.push( new THREE.Face3(0, 1, 2));
 
-			camera.position.z = 7;
+		// ////////////Material
+  //   var material = new THREE.MeshBasicMaterial({
+	// 	color: 0x999999,
+	// 	transparent: true,
+	// 	opacity: 1,
+	// 	wireframe: true,
+	// 	wireframeLinewidth: 1,
+	// GLOW
+	// emissive: 0xff0000,
+	// emissiveIntensity: 0.1
+		// specular: 0xff0000,
+	//
+	// });
+	//////////////////////////////////
+// 	var material = new THREE.MeshPhongMaterial({
+// 	color: 0xF3FFE2,
+// 	shininess: 100,
+// 	map: new THREE.TextureLoader().load('Rocky_Desert.jpg'),
+// 	normalMap: new THREE.TextureLoader().load("http://i.imgur.com/nv73w3f.jpg")
+// });
+
+var material1 = new THREE.MeshPhongMaterial({
+color: 0xF3FFE2,
+specular: 0xffffff,
+shininess: 100,
+map: new THREE.TextureLoader().load('Rocky_Desert.jpg'),
+bumpMap: new THREE.TextureLoader().load("http://i.imgur.com/nv73w3f.jpg")
+});
+
+var material = new THREE.MeshPhongMaterial({
+ 	color: 0x999999,
+	normalMap: new THREE.TextureLoader().load("http://i.imgur.com/nv73w3f.jpg")
+});
+
+
+
+		//Geometry
+
+		var geometry = new THREE.BoxGeometry(5, 3, 1);
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.x = -10;
+
+		scene.add(mesh);
+
+		var geometry2= new THREE.SphereGeometry(2);
+		var mesh2 = new THREE.Mesh(geometry2, material);
+		// mesh1.rotation.x += .05;
+		mesh2.position.x = 10;
+		scene.add(mesh2);
+
+
+		var geometry3= new THREE.PlaneGeometry(10000, 10000, 100, 100);
+		var mesh3 = new THREE.Mesh(geometry3, material1);
+		mesh3.rotation.x = -90 * Math.PI / 180;
+		mesh3.position.y = -100;
+		scene.add(mesh3);
+
+
+			camera.position.z = 15;
 
 			var animate = function () {
 				requestAnimationFrame( animate );
 
-				mesh.rotation.x += 0.05;
-				mesh.rotation.y += 0.02;
+				mesh.rotation.x += 0.01;
+				mesh.rotation.y += 0.01;
+				mesh2.rotation.x += .01;
 
 				renderer.render( scene, camera );
 			};
